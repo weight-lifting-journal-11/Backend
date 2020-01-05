@@ -1,0 +1,36 @@
+{
+  "name": "bw-weight-lifting-journal",
+  "version": "1.0.0",
+  "description": "keep track of exercises, notes, and user profile",
+  "main": "index.js",
+  "repository": "https://github.com/weight-lifting-journal-11/Backend.git",
+  "author": "AMC <53350942+AMC-ai@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js",
+    "db:update": "knex migrate:latest",
+    "db:undo": "knex migrate:rollback"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3",
+    "jest": "^24.9.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
+    "connect-session-knex": "^1.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.6",
+    "multer": "^1.4.2",
+    "pg": "^7.17.0",
+    "sqlite3": "^4.1.1"
+  }
+}
