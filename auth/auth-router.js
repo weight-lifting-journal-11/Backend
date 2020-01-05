@@ -9,12 +9,12 @@ const Users = require('../users/user-model');
 // for endpoints beginning with /api/auth
 router.post('/register', (req, res) => {
     let user = req.body;
-    const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
+    const hash = bcrypt.hashSync(user.password, 10);
     user.password = hash;
 
     Users.insert(user)
-        .then(({ id }) => {
-            res.status(201).json({ status: 201, message: id });
+        .then(saved => {
+            res.status(201).json({ status: 201, message: saved });
         })
         .catch(error => {
             res.status(500).json({ error: error, message: 'registration failed' });
