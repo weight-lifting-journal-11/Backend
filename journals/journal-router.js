@@ -36,7 +36,7 @@ router.post('/',
                 res.status(201).json(item);
             })
             .catch(err => {
-                console.log("journal------>", error);
+                console.log("journal------>", err);
                 res.status(500).json(err);
             })
     });
