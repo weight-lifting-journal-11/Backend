@@ -17,3 +17,5 @@ router.get('/',
                     .json({ error: err, message: 'cannot retrieve exercises' })
             })
     });
+
+module.exports = router;

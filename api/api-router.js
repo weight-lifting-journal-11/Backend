@@ -11,6 +11,7 @@ router.use('/users', usersRouter);
 router.use('/journals', journalsRouter);
 router.use('/exercises', exercisesRouter);
 
+
 // router.get('/', (req, res) => {
 //     const message = process.env.MSG || "Hello World"
 //     res.json({ message });
