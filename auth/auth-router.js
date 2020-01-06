@@ -41,6 +41,7 @@ router.post('/login', (req, res) => {
             }
         })
         .catch(error => {
+            console.log('----->', error)
             res.status(500).json({ error: "Unable to Login User", error });
         });
 });
@@ -49,6 +50,7 @@ router.get("/logout", (req, res) => {
     if (req.session) {
         req.session.destroy(error => {
             if (error) {
+                console.log('----->', error)
                 res.status(500).json({
                     message:
                         "you can checkout any time you like, but you can never leave!!!!!",
