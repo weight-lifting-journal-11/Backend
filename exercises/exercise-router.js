@@ -50,4 +50,89 @@ router.post('/',
             })
     })
 
+
+router.get('/:id',
+    // restricted, 
+    (req, res) => {
+        Ex.findById(req.params.id)
+            .then(journal => {
+                res.status(200).json(journal)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    });
+
+router.put('/:id',
+    // restricted, 
+    (req, res) => {
+        const { id } = req.params
+        let changes = req.body;
+        if (!changes.name) {
+            res.status(422).json({ message: "Missing: name" })
+        }
+        if (!changes.weight) {
+            res.status(422).json({ message: "Missing: weight" })
+        }
+        if (!changes.reps) {
+            res.status(422).json({ message: "Missing: reps" })
+        }
+        if (!changes.sets) {
+            res.status(422).json({ message: "Missing: sets" })
+        }
+        if (!changes.journalId) {
+            res.status(422).json({ message: "Missing: journalId" })
+        }
+        if (!changes.userId) {
+            res.status(422).json({ message: "Missing: userId" })
+        }
+        Ex.update(id, changes)
+            .then(updated => {
+                if (updated) {
+                    res.status(200).json({ success: true, updated })
+                } else {
+                    res.status(404).json({ message: "This item could not be updated" })
+                }
+            })
+            .catch(err => {
+                console.log('Ex PUT------>', err)
+                res.status(500).json(err)
+            })
+    })
+
+router.delete('/:id',
+    // restricted, 
+    (req, res) => {
+        Ex.remove(req.params.id)
+            .then(count => {
+                if (count > 0) {
+                    res.status(200).json({ message: "This item has been removed " })
+                } else {
+                    res.status(404).json({ message: "This item does not exist" })
+                }
+            })
+            .catch(err => {
+                console.log('Ex DELETE------>', err)
+                res.status(500).json(err)
+            })
+    })
+
+router.get('/journals/:journalId',
+    // restricted, 
+    (req, res) => {
+        const { journalId } = req.params
+        Ex.findByJournalId(journalId)
+            .then(exercises => {
+                if (exercises) {
+                    res.status(200).json(exercises)
+                } else {
+                    res.status(404).json({ message: "Could not retrieve exercises by user" })
+                }
+            })
+            .catch(err => {
+                console.log('Ex ById------->', err)
+                res.status(500).json(err)
+            })
+    });
+
 module.exports = router;
