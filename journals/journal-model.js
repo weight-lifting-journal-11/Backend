@@ -32,7 +32,7 @@ function findByUserId(userId) {
 
 function add(journal) {
     return db('journal')
-        .insert(journal)
+        .insert(journal, 'id')
         .then(ids => {
             const [id] = ids;
             return db('journal')
