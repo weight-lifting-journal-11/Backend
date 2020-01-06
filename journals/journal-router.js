@@ -18,4 +18,18 @@ router.get('/',
             })
     });
 
+router.post('/:id/journals', (req, res) => {
+    const newJournal = req.body;
+
+    newJournal.user_id = req.params.id
+
+    UJ.insert(newJournal)
+        .then(added => {
+            res.status(201).json(added);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+})
+
 module.exports = router;

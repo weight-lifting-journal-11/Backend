@@ -1,26 +1,20 @@
 
-exports.up = function (knex) {
-    return knex.schema.createTable('users_journals', tbl => {
+exports.up = function (knex, Promise) {
+    return knex.schema.createTable("journal", tbl => {
         tbl.increments();
 
-        // Workout table columns
+        tbl
+            .integer("userId")
+            .unsigned()
+            .references("id")
+            .inTable("users");
         tbl.string("date")
             .notNullable();
-        tbl.string("target_region", 128);
-
-        tbl.integer('user_id')
-            .unsigned()
-            .notNullable()
-            .references('id')
-            .inTable('users')
-            .onUpdate('CASCADE')
-            .onDelete('CASCADE');
-
-        tbl.timestamp('created_at')
-            .defaultTo(knex.fn.now())
+        tbl.string("region", 150)
+            .notNullable();
     });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTableIfExists('users_journals');
+    return knex.schema.dropTableIfExists("journal");
 };

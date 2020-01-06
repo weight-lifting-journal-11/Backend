@@ -11,13 +11,14 @@ module.exports = {
 
 };
 
-function find() {
+function find(id) {
     return db("users_journals");
+    // .where({ "user_id": id });
 }
 
 function findById(id) {
     return db("users_journals")
-        .where({ id })
+        .where({ "user_id": id })
         .first();
 }
 
@@ -29,10 +30,10 @@ function findLatestJournal(latest) {
         });
 }
 
-function insert(journal) {
+function insert(id, journal) {
     return db("users_journals")
         .insert(journal)
-        .then(ids => 1);
+        .where({ "user_id": id });
 }
 
 function update(id, changes) {
