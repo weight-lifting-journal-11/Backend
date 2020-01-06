@@ -3,41 +3,60 @@ const db = require("../data/dbConfig");
 module.exports = {
     find,
     findById,
-    findLatestJournal,
-    // findJournalsWithExercises,
-    insert,
-    // remove,
+    findByUserId,
+    // findJournalsWithExerciseByUserId,
+    add,
+    remove,
     update
 
 };
 
-function find(id) {
-    return db("users_journals");
-    // .where({ "user_id": id });
+function find() {
+    return db('journal')
+        .select('id', 'region', 'date', 'userId');
 }
 
 function findById(id) {
-    return db("users_journals")
-        .where({ "user_id": id })
+    return db('journal')
+        .select('id', 'region', 'date', 'userId')
+        .where({ id })
         .first();
 }
 
-function findLatestJournal(latest) {
-    return db("users_journals")
-        .where({
-            date: latest.date,
-            region: latest.target_region
-        });
+function findByUserId(userId) {
+    return db('journal')
+        .join('users', 'users.id', 'journal.userId')
+        .where('journal.userId', userId)
+        .select('journal.*')
 }
 
-function insert(id, journal) {
-    return db("users_journals")
+function add(journal) {
+    return db('journal')
         .insert(journal)
-        .where({ "user_id": id });
+        .then(ids => {
+            const [id] = ids;
+            return db('journal')
+                .where({ id })
+                .first();
+        })
 }
 
 function update(id, changes) {
-    return db("users_journals")
-        .where({ id })
-        .update(changes);
+    return db('journal')
+        .where('id', id)
+        .update(changes)
+        .then(() => {
+            return db('journal')
+                .where({ id })
+                .first();
+        })
 }
+
+function remove(id) {
+    return db('journal')
+        .where({ id })
+        .delete();
+}
+
+// function findJournalsWithExerciseByUserId(id, userId) {
+//     // }
