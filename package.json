@@ -10,7 +10,11 @@
     "server": "nodemon index.js",
     "start": "node index.js",
     "db:update": "knex migrate:latest",
-    "db:undo": "knex migrate:rollback"
+    "db:undo": "knex migrate:rollback",
+    "test": "cross-env DB_ENV=testing jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
